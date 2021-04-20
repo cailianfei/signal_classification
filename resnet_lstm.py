@@ -46,6 +46,11 @@ for i in range(0,2): #读取数据
         Z_test = np.vstack((Z_test, Z_data[test_idx]))
 '''
 X_train, X_test, Y_train, Y_test, Z_train, Z_test = gen_data_uniform("../RML/RML2016.10a/RML2016.10a_dict.pkl")
+
+shuffle = np.arange(X_train.shape[0])
+X_train, Y_train, Z_train = X_train[shuffle] , Y_train[shuffle], Z_train[shuffle]
+
+
 print('训练集X维度：',X_train.shape)
 print('训练集Y维度：',Y_train.shape)
 print('训练集Z维度：',Z_train.shape)
@@ -167,7 +172,7 @@ val_loss_list = history.history['val_loss']
 loss_list = history.history['loss']
 plt.plot(range(len(loss_list)),val_loss_list)
 plt.plot(range(len(loss_list)),loss_list)
-plt.show()
+#plt.show()
 
 #%%
 model.save(filepath)
