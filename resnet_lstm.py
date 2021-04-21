@@ -47,6 +47,11 @@ for i in range(0,2): #读取数据
 '''
 X_train, X_test, Y_train, Y_test, Z_train, Z_test = gen_data_uniform("../RML/RML2016.10a/RML2016.10a_dict.pkl")
 
+mean = np.mean(X_train, 0)
+std = np.std(X_train, 0)
+
+X_train, X_test  = (X_train - mean)/std, (X_test - mean)/std
+
 shuffle = np.arange(X_train.shape[0])
 X_train, Y_train, Z_train = X_train[shuffle] , Y_train[shuffle], Z_train[shuffle]
 
@@ -142,7 +147,7 @@ Xm = Activation('softmax')(Xm)
 #Create Model
 model = Model.Model(inputs=Xm_input,outputs=Xm)
 adam = keras.optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
-model.compile(loss='categorical_crossentropy', optimizer=adam)
+model.compile(loss='categorical_crossentropy', optimizer=adam, metrics=['accuracy'] )
 model.summary()
 #%%
 
